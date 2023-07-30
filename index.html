@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gomoku</title>
-  <script type="module" src="app.ts" defer></script>
+  <script type="module" src="./dist/app.js" defer></script>
   <link rel="stylesheet" href="./style.css" />
 </head>
 
@@ -15,15 +15,11 @@
     <div class="header__title">
       <h1>Gomoku</h1>
     </div>
-    <div class="header__subtitle">
+    <!-- <div class="header__subtitle">
       <h2>A game of strategy</h2>
-    </div>
+    </div> -->
   </header>
-  <main class="game" id="game">
-    <div class="board" id="board"></div>
-    <div class="game-info" id="game-info">
-      <div class="game-info__status" id="game-info__status"></div>
-      <div class="game-info__restart" id="game-info__restart">Restart</div>
+  <main class="main" id="game">
     </div>
   </main>
   <footer>
