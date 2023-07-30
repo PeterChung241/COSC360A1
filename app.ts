@@ -1,4 +1,4 @@
-var Turn: number = 0;
+let Turn: number = 0;
 
 
 enum STATUS {
@@ -42,8 +42,9 @@ class Piece {
             this.status = Turn % 2 === 0 ? STATUS.BLACK : STATUS.WHITE;
             this.element.classList.add(this.status.toLowerCase());
             Turn++;
+            checkWin(this.status, this.id);
             if (Turn >= 255) {
-                alert('Game Over. Draw\n Would you like to play again?');
+                alert('Game Over. Draw');
                 location.reload();
             }
         }
@@ -84,9 +85,140 @@ class Restart {
     }
 }
 
-function checkWin() {
-    
-        
+class winMessage {
+    element: HTMLElement;
+
+    constructor(status: STATUS) {
+        this.element = document.createElement('div');
+        this.element.classList.add('game_status');
+        this.element.classList.add('winMessage');
+        this.element.innerText = `${status} wins!`;
+
+    }
+
+}
+
+function win(status: STATUS): void {
+    document.getElementById('game')?.appendChild(new winMessage(status).element);
+}
+
+function checkWin(status: STATUS, id: number): void {
+    let count = 0;
+    let row = Math.floor(id / 15);
+    let col = id % 15;
+
+    //check row
+    if (col <= 10)
+        for (let i = 0; i < 5; i++) {
+            if (board.rows[row].pieces[col + i].status === status) {
+                count++;
+                if (count === 5) {
+                    win(status);
+                }
+            }
+            else {
+                count = 0;
+                break;
+            }
+        }
+    if (col >= 4)
+        for (let i = 0; i < 5; i++) {
+            if (board.rows[row].pieces[col - i].status === status) {
+                count++;
+                if (count === 5) {
+                    win(status);
+                }
+            }
+            else {
+                count = 0;
+                break;
+            }
+        }
+
+    //check col
+    if (row <= 10)
+        for (let i = 0; i < 5; i++) {
+            if (board.rows[row + i].pieces[col].status === status) {
+                count++;
+                if (count === 5) {
+                    win(status);
+                }
+            }
+            else {
+                count = 0;
+                break;
+            }
+        }
+    if (row >= 4)
+        for (let i = 0; i < 5; i++) {
+            if (board.rows[row - i].pieces[col].status === status) {
+                count++;
+                if (count === 5) {
+                    win(status);
+                }
+            }
+            else {
+                count = 0;
+                break;
+            }
+        }
+
+    //check diagonal
+    if (row <= 10 && col <= 10)
+        for (let i = 0; i < 5; i++) {
+            if (board.rows[row + i].pieces[col + i].status === status) {
+                count++;
+                if (count === 5) {
+                    win(status);
+                }
+            }
+            else {
+                count = 0;
+                break;
+            }
+        }
+    if (row >= 4 && col <= 10)
+        for (let i = 0; i < 5; i++) {
+            if (board.rows[row - i].pieces[col + i].status === status) {
+                count++;
+                if (count === 5) {
+                    win(status);
+                }
+            }
+            else {
+                count = 0;
+                break;
+            }
+        }
+    if (row <= 10 && col >= 4)
+        for (let i = 0; i < 5; i++) {
+            if (board.rows[row + i].pieces[col - i].status === status) {
+                count++;
+                if (count === 5) {
+                    win(status);
+                }
+            }
+            else {
+                count = 0;
+                break;
+            }
+        }
+    if (row >= 4 && col >= 4)
+        for (let i = 0; i < 5; i++) {
+            if (board.rows[row - i].pieces[col - i].status === status) {
+                count++;
+                if (count === 5) {
+                    win(status);
+                }
+            }
+            else {
+                count = 0;
+                break;
+            }
+        }
+
+
+}
 
 const board = new Board(15);
 document.getElementById('game')?.appendChild(board.element);
